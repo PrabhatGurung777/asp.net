@@ -49,3 +49,5 @@ Thumbs.db
 # Package directories
 packages/
 Migrations/
+
+asp.net.sln
