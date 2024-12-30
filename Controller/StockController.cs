@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using asp.net.Data;
 using asp.net.Dtos.Stock;
+using asp.net.Interfaces;
 using asp.net.Mappers;
 using asp.net.Models;
+using asp.net.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,15 +20,17 @@ namespace asp.net.Controllers
     {
         
         private readonly ApplicationDBContext _context;
+        private readonly IStockRepository _stockRepo;
 
-        public StockController(ApplicationDBContext context)
+        public StockController(ApplicationDBContext context, IStockRepository stockRepo)
         {
             _context = context;
+            _stockRepo = stockRepo;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll(){
-            var stocks = await _context.Stock.ToListAsync();
+            var stocks = await _stockRepo.GetAllAsync();
             var stockDto =    stocks.Select(s => s.ToStockDto());
             return Ok(stocks);
         }

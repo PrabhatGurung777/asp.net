@@ -1,4 +1,6 @@
 using asp.net.Data;
+using asp.net.Interfaces;
+using asp.net.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +16,10 @@ builder.Services.AddDbContext<ApplicationDBContext>(optinons=>{
     //Here, you specify which database server you want to use like MySQL, SQLServer, Oracle, etc.
     optinons.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped<IStockRepository, StockRepository>();
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
